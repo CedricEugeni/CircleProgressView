@@ -9,6 +9,13 @@
 import UIKit
 
 class CircleProgressView: UIView {
+    /**
+     Progress value that will be used by CircleProgressView to draw circle.
+     
+     This value can be set to .none to make this view disappear.
+     
+     This value must be between 0 and 100.
+     */
     var progress: Double? = .none {
         didSet {
             if let p = progress {
