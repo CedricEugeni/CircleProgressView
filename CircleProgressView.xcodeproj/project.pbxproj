@@ -10,6 +10,7 @@
 		9556BD011EABBEAE0076E3C4 /* CircleProgressView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9556BCF71EABBEAE0076E3C4 /* CircleProgressView.framework */; };
 		9556BD061EABBEAE0076E3C4 /* CircleProgressViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9556BD051EABBEAE0076E3C4 /* CircleProgressViewTests.swift */; };
 		9556BD081EABBEAE0076E3C4 /* CircleProgressView.h in Headers */ = {isa = PBXBuildFile; fileRef = 9556BCFA1EABBEAE0076E3C4 /* CircleProgressView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		95673BD81EABC5B300975C7F /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95673BD71EABC5B300975C7F /* CircleProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		9556BD001EABBEAE0076E3C4 /* CircleProgressViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CircleProgressViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9556BD051EABBEAE0076E3C4 /* CircleProgressViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgressViewTests.swift; sourceTree = "<group>"; };
 		9556BD071EABBEAE0076E3C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		95673BD71EABC5B300975C7F /* CircleProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 			children = (
 				9556BCFA1EABBEAE0076E3C4 /* CircleProgressView.h */,
 				9556BCFB1EABBEAE0076E3C4 /* Info.plist */,
+				95673BD71EABC5B300975C7F /* CircleProgressView.swift */,
 			);
 			path = CircleProgressView;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 					9556BCF61EABBEAE0076E3C4 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 4285VZ4HLE;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 					9556BCFF1EABBEAE0076E3C4 = {
@@ -198,6 +202,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95673BD81EABC5B300975C7F /* CircleProgressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +327,7 @@
 		9556BD0C1EABBEAE0076E3C4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4285VZ4HLE;
@@ -334,6 +340,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = fr.cedric.CircleProgressView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -341,6 +348,7 @@
 		9556BD0D1EABBEAE0076E3C4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4285VZ4HLE;
@@ -360,6 +368,7 @@
 		9556BD0F1EABBEAE0076E3C4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 4285VZ4HLE;
 				INFOPLIST_FILE = CircleProgressViewTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -372,6 +381,7 @@
 		9556BD101EABBEAE0076E3C4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 4285VZ4HLE;
 				INFOPLIST_FILE = CircleProgressViewTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -400,6 +410,7 @@
 				9556BD0D1EABBEAE0076E3C4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9556BD0E1EABBEAE0076E3C4 /* Build configuration list for PBXNativeTarget "CircleProgressViewTests" */ = {
 			isa = XCConfigurationList;
@@ -408,6 +419,7 @@
 				9556BD101EABBEAE0076E3C4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
