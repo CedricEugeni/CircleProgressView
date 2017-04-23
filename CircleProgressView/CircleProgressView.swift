@@ -18,11 +18,17 @@ open class CircleProgressView: UIView {
      */
     open var progress: Double? = .none {
         didSet {
+            // Cleaning all possible previous layers
+            self.layer.sublayers?.forEach({ (lay) in
+                lay.removeFromSuperlayer()
+            })
+            
+            // Testing values
             if let p = progress {
-                if p < 0 || p >= 100 { // invalid value or 100
+                if p < 0 || p >= 100 { // Invalid value or 100
                     self.progress = .none
                 } else {
-                    if p == 0 { // dashed circle
+                    if p == 0 { // Dashed circle
                         let circle = CAShapeLayer(layer: self.layer)
                         circle.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), cornerRadius: self.frame.width / 2).cgPath
                         circle.fillColor = UIColor.clear.cgColor
@@ -30,8 +36,8 @@ open class CircleProgressView: UIView {
                         circle.lineWidth = 5
                         circle.lineDashPattern = [10, 15]
                         self.layer.addSublayer(circle)
-                    } else { // full circle with value
-                        //draw outer circle
+                    } else { // Full circle with value
+                        // Draw outer circle
                         let circle = CAShapeLayer(layer: self.layer)
                         circle.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), cornerRadius: self.frame.width / 2).cgPath
                         circle.fillColor = UIColor.clear.cgColor
@@ -39,7 +45,7 @@ open class CircleProgressView: UIView {
                         circle.lineWidth = 5
                         self.layer.addSublayer(circle)
                         
-                        //draw inner disc
+                        // Draw inner disc
                         let startAngle: CGFloat = -(CGFloat.pi / 2)
                         let angle: CGFloat = 2 * CGFloat.pi * (CGFloat(p) / 100)
                         let endAngle: CGFloat = startAngle + angle
@@ -55,7 +61,7 @@ open class CircleProgressView: UIView {
                         self.layer.addSublayer(layer)
                     }
                 }
-            } else { // progress == .none
+            } else { // Progress == .none
                 self.isHidden = true
             }
         }
