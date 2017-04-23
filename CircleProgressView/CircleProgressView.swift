@@ -29,41 +29,56 @@ open class CircleProgressView: UIView {
                     self.progress = .none
                 } else {
                     if p == 0 { // Dashed circle
-                        let circle = CAShapeLayer(layer: self.layer)
-                        circle.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), cornerRadius: self.frame.width / 2).cgPath
-                        circle.fillColor = UIColor.clear.cgColor
-                        circle.strokeColor = self.tintColor.cgColor
-                        circle.lineWidth = 5
-                        circle.lineDashPattern = [10, 15]
-                        self.layer.addSublayer(circle)
+                        self.drawOuterCircle(dashed: true)
                     } else { // Full circle with value
                         // Draw outer circle
-                        let circle = CAShapeLayer(layer: self.layer)
-                        circle.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), cornerRadius: self.frame.width / 2).cgPath
-                        circle.fillColor = UIColor.clear.cgColor
-                        circle.strokeColor = self.tintColor.cgColor
-                        circle.lineWidth = 5
-                        self.layer.addSublayer(circle)
+                        self.drawOuterCircle(dashed: false)
                         
                         // Draw inner disc
-                        let startAngle: CGFloat = -(CGFloat.pi / 2)
-                        let angle: CGFloat = 2 * CGFloat.pi * (CGFloat(p) / 100)
-                        let endAngle: CGFloat = startAngle + angle
-                        let center: CGPoint = CGPoint(x: self.frame.width / 2, y: self.frame.width / 2)
-                        let portionPath: UIBezierPath = UIBezierPath()
-                        portionPath.move(to: center)
-                        portionPath.addArc(withCenter: center, radius: self.frame.width / 2, startAngle: startAngle, endAngle: endAngle, clockwise: true)
-                        portionPath.close()
-                        portionPath.fill()
-                        let layer: CAShapeLayer = CAShapeLayer(layer: self.layer)
-                        layer.path = portionPath.cgPath
-                        layer.fillColor = self.tintColor.cgColor
-                        self.layer.addSublayer(layer)
+                        self.drawInnerDisc(with: p)
                     }
                 }
             } else { // Progress == .none
                 self.isHidden = true
             }
         }
+    }
+    
+    /**
+     Draws the outer circle of the progress view
+     
+     - Parameter dashed: Tells if the outer circle has to be dashed or plained
+     */
+    func drawOuterCircle(dashed: Bool) {
+        let circle = CAShapeLayer(layer: self.layer)
+        circle.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), cornerRadius: self.frame.width / 2).cgPath
+        circle.fillColor = UIColor.clear.cgColor
+        circle.strokeColor = self.tintColor.cgColor
+        circle.lineWidth = 5
+        if dashed {
+            circle.lineDashPattern = [10, 15]
+        }
+        self.layer.addSublayer(circle)
+    }
+    
+    /**
+     Draws the inner disc of the progress view
+     
+     - Parameter progress: Indicates which percentage should be represented in the progress view
+     */
+    func drawInnerDisc(with progress: Double) {
+        let startAngle: CGFloat = -(CGFloat.pi / 2)
+        let angle: CGFloat = 2 * CGFloat.pi * (CGFloat(progress) / 100)
+        let endAngle: CGFloat = startAngle + angle
+        let center: CGPoint = CGPoint(x: self.frame.width / 2, y: self.frame.width / 2)
+        let portionPath: UIBezierPath = UIBezierPath()
+        portionPath.move(to: center)
+        portionPath.addArc(withCenter: center, radius: self.frame.width / 2, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+        portionPath.close()
+        portionPath.fill()
+        let layer: CAShapeLayer = CAShapeLayer(layer: self.layer)
+        layer.path = portionPath.cgPath
+        layer.fillColor = self.tintColor.cgColor
+        self.layer.addSublayer(layer)
     }
 }
