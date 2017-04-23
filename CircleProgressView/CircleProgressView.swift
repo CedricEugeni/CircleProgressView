@@ -28,6 +28,7 @@ open class CircleProgressView: UIView {
                 if p < 0 || p >= 100 { // Invalid value or 100
                     self.progress = .none
                 } else {
+                    self.isHidden = false
                     if p == 0 { // Dashed circle
                         self.drawOuterCircle(dashed: true)
                     } else { // Full circle with value
