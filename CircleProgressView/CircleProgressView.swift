@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CircleProgressView: UIView {
+open class CircleProgressView: UIView {
     /**
      Progress value that will be used by CircleProgressView to draw circle.
      
@@ -16,16 +16,43 @@ class CircleProgressView: UIView {
      
      This value must be between 0 and 100.
      */
-    var progress: Double? = .none {
+    open var progress: Double? = .none {
         didSet {
             if let p = progress {
-                if p < 0 || p > 100 { // invalid value
+                if p < 0 || p >= 100 { // invalid value or 100
                     self.progress = .none
                 } else {
                     if p == 0 { // dashed circle
-                        
+                        let circle = CAShapeLayer(layer: self.layer)
+                        circle.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), cornerRadius: self.frame.width / 2).cgPath
+                        circle.fillColor = UIColor.clear.cgColor
+                        circle.strokeColor = self.tintColor.cgColor
+                        circle.lineWidth = 5
+                        circle.lineDashPattern = [10, 15]
+                        self.layer.addSublayer(circle)
                     } else { // full circle with value
+                        //draw outer circle
+                        let circle = CAShapeLayer(layer: self.layer)
+                        circle.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), cornerRadius: self.frame.width / 2).cgPath
+                        circle.fillColor = UIColor.clear.cgColor
+                        circle.strokeColor = self.tintColor.cgColor
+                        circle.lineWidth = 5
+                        self.layer.addSublayer(circle)
                         
+                        //draw inner disc
+                        let startAngle: CGFloat = -(CGFloat.pi / 2)
+                        let angle: CGFloat = 2 * CGFloat.pi * (CGFloat(p) / 100)
+                        let endAngle: CGFloat = startAngle + angle
+                        let center: CGPoint = CGPoint(x: self.frame.width / 2, y: self.frame.width / 2)
+                        let portionPath: UIBezierPath = UIBezierPath()
+                        portionPath.move(to: center)
+                        portionPath.addArc(withCenter: center, radius: self.frame.width / 2, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+                        portionPath.close()
+                        portionPath.fill()
+                        let layer: CAShapeLayer = CAShapeLayer(layer: self.layer)
+                        layer.path = portionPath.cgPath
+                        layer.fillColor = self.tintColor.cgColor
+                        self.layer.addSublayer(layer)
                     }
                 }
             } else { // progress == .none
