@@ -18,30 +18,19 @@ open class CircleProgressView: UIView {
      */
     open var progress: Double? = .none {
         didSet {
-            // Cleaning all possible previous layers
-            self.layer.sublayers?.forEach({ (lay) in
-                lay.removeFromSuperlayer()
-            })
-            
-            // Testing values
-            if let p = progress {
-                if p < 0 || p >= 100 { // Invalid value or 100
-                    self.progress = .none
-                } else {
-                    self.isHidden = false
-                    if p == 0 { // Dashed circle
-                        self.drawOuterCircle(dashed: true)
-                    } else { // Full circle with value
-                        // Draw outer circle
-                        self.drawOuterCircle(dashed: false)
-                        
-                        // Draw inner disc
-                        self.drawInnerDisc(with: p)
-                    }
-                }
-            } else { // Progress == .none
-                self.isHidden = true
-            }
+            self.redraw()
+        }
+    }
+    
+    open var borderWidth: CGFloat = 5 {
+        didSet {
+            self.redraw()
+        }
+    }
+    
+    open var dashPattern: [NSNumber] = [10, 15] {
+        didSet {
+            self.redraw()
         }
     }
     
@@ -55,9 +44,9 @@ open class CircleProgressView: UIView {
         circle.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height), cornerRadius: self.frame.width / 2).cgPath
         circle.fillColor = UIColor.clear.cgColor
         circle.strokeColor = self.tintColor.cgColor
-        circle.lineWidth = 5
+        circle.lineWidth = self.borderWidth
         if dashed {
-            circle.lineDashPattern = [10, 15]
+            circle.lineDashPattern = self.dashPattern
         }
         self.layer.addSublayer(circle)
     }
@@ -81,5 +70,32 @@ open class CircleProgressView: UIView {
         layer.path = portionPath.cgPath
         layer.fillColor = self.tintColor.cgColor
         self.layer.addSublayer(layer)
+    }
+    
+    private func redraw() {
+        // Cleaning all possible previous layers
+        self.layer.sublayers?.forEach({ (lay) in
+            lay.removeFromSuperlayer()
+        })
+        
+        // Testing values
+        if let p = progress {
+            if p < 0 || p >= 100 { // Invalid value or 100
+                self.progress = .none
+            } else {
+                self.isHidden = false
+                if p == 0 { // Dashed circle
+                    self.drawOuterCircle(dashed: true)
+                } else { // Full circle with value
+                    // Draw outer circle
+                    self.drawOuterCircle(dashed: false)
+                    
+                    // Draw inner disc
+                    self.drawInnerDisc(with: p)
+                }
+            }
+        } else { // Progress == .none
+            self.isHidden = true
+        }
     }
 }
